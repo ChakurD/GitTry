@@ -10,6 +10,7 @@ namespace Task
             string b = Console.ReadLine();
             Console.WriteLine("Результат сложения: ");
             Console.WriteLine(int.Parse(a) + int.Parse(b));
+            Console.WriteLine("Hello World");
         }
     }
 }
