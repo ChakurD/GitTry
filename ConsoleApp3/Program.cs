@@ -5,57 +5,57 @@
         static void Main(string[] args)
         {
             Console.WriteLine("Введите номер месяца от 1 до 12:");
-            int MonthNum = int.Parse(Console.ReadLine());
-            switch (MonthNum) 
+            int monthNum = int.Parse(Console.ReadLine());
+            switch (monthNum) 
             {
                 case 12:
                 case 1:
                 case 2:
-                    Console.WriteLine($"{MonthNum} соответствует Зиме");
+                    Console.WriteLine($"{monthNum} соответствует Зиме");
                     break;
                 case 3:
                 case 4:
                 case 5:
-                    Console.WriteLine($"{MonthNum} соответствует Весне");
+                    Console.WriteLine($"{monthNum} соответствует Весне");
                     break;
                 case 6:
                 case 7:
                 case 8:
-                    Console.WriteLine($"{MonthNum} соответствует Лету");
+                    Console.WriteLine($"{monthNum} соответствует Лету");
                     break;
                 case 9:
                 case 10:
                 case 11:
-                    Console.WriteLine($"{MonthNum} соответствует Осени");
+                    Console.WriteLine($"{monthNum} соответствует Осени");
                     break;
             }
 
             //--------------------------------------------------------------------------------
 
             Console.WriteLine("Введите номер месяца от 1 до 12:");
-            int SecMonthNum = Convert.ToInt32(Console.ReadLine());
-            if (SecMonthNum <= 2 || SecMonthNum == 12)
+            int secMonthNum = Convert.ToInt32(Console.ReadLine());
+            if (secMonthNum <= 2 || secMonthNum == 12)
             {
-                Console.WriteLine($"{SecMonthNum} соответствует Зиме");
+                Console.WriteLine($"{secMonthNum} соответствует Зиме");
             }
-            else if (SecMonthNum <= 5)
+            else if (secMonthNum <= 5)
             {
-                Console.WriteLine($"{SecMonthNum} соответствует Весне");
+                Console.WriteLine($"{secMonthNum} соответствует Весне");
             }
-            else if (SecMonthNum <= 8)
+            else if (secMonthNum <= 8)
             {
-                Console.WriteLine($"{SecMonthNum} соответствует Лету");
+                Console.WriteLine($"{secMonthNum} соответствует Лету");
             }
-            else if (SecMonthNum <= 11)
+            else if (secMonthNum <= 11)
             {
-                Console.WriteLine($"{SecMonthNum} соответствует Осени");
+                Console.WriteLine($"{secMonthNum} соответствует Осени");
             }
 
             //--------------------------------------------------------------------------------
 
             Console.WriteLine("Введите число: ");
-            int ParNum = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine(ParNum % 2 == 0 ? $"{ParNum} Четное" : $"{ParNum} Не четное");
+            int parNum = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine(parNum % 2 == 0 ? $"{parNum} Четное" : $"{parNum} Не четное");
 
             //--------------------------------------------------------------------------------
 
