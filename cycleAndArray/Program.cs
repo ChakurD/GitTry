@@ -58,11 +58,11 @@ namespace cycleAndArray
 
             //-----------------------------------------------------
 
-            int squareNum = 1;
+            double squareNum = 1;
             int Value = 10;
             while (Value <= 20)
             {
-                squareNum = Value * Value;
+                squareNum = Math.Pow(Convert.ToDouble(Value),0);
                 Value++;
                 Console.WriteLine($"{squareNum}");
             }
@@ -78,7 +78,7 @@ namespace cycleAndArray
             {
                 if (entNum == elem) { coincidence = true; }
             }
-            Console.WriteLine(coincidence==true? $"{entNum} входит в массив" : $"{entNum} не входит в массив") ;
+            Console.WriteLine(coincidence? $"{entNum} входит в массив" : $"{entNum} не входит в массив") ;
 
             //-----------------------------------------------------
 
@@ -86,8 +86,8 @@ namespace cycleAndArray
             Console.WriteLine("Введите число: ");
             int entVal = Convert.ToInt32(Console.ReadLine());
             bool coincidence2 = false;
-            bool Count = true;
-            while (Count)
+            bool count = true;
+            while (count)
             {
                 int firstEnter = Array.FindIndex(array2, numeric => numeric == entVal);
                 if (firstEnter >= 0)
@@ -101,10 +101,10 @@ namespace cycleAndArray
                     Array.Resize(ref array2, array2.Length - 1);
                     coincidence2 = true;
                 }
-                else { Count = false; }
+                else  count = false; 
                 
             }
-            if (coincidence2 != true) { Console.WriteLine($"Число {entVal} не входит в массив"); }
+            if (!coincidence2) { Console.WriteLine($"Число {entVal} не входит в массив"); }
             for (int i = 0; i < array2.Length; i++)
             {
                 Console.WriteLine($"{array2[i]}");
@@ -164,18 +164,18 @@ namespace cycleAndArray
 
             //-----------------------------------------------------
 
-            int Fibonachi = 1;
+            int fibonachi = 1;
             int subsequFibonachi = 0;
             int fibonachiCount = 0;
             int prevValue = 0;
-            Console.Write($"{Fibonachi} ");
+            Console.Write($"{fibonachi} ");
             while (fibonachiCount <= 11)
             {
-                prevValue = Fibonachi;
-                Fibonachi += subsequFibonachi;
+                prevValue = fibonachi;
+                fibonachi += subsequFibonachi;
                 fibonachiCount++;
                 subsequFibonachi = prevValue;
-                Console.Write($"{Fibonachi} ");
+                Console.Write($"{fibonachi} ");
             }
             Console.WriteLine();
 
