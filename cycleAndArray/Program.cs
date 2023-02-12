@@ -123,17 +123,13 @@ namespace cycleAndArray
                 Console.Write($"{array3[elem]} ");
             }
             Console.WriteLine();
-            int min, max, averVal;
-            min = array3[0];
-            max = array3[0];
-            for (int i = 1; i < array3.Length; i++)
+            int min = array3[0], max = array3[0];
+            for (int i = 0; i < array3.Length; i++)
             {
-                if (array3[i] < min)
-                { min = array3[i]; }
-                if (array3[i] > max)
-                { max = array3[i]; }
+                if (array3[i] < min)  min = array3[i]; 
+                if (array3[i] > max)  max = array3[i]; 
             }
-            averVal = ((min + max) / 2);
+            int averVal = ((min + max) / 2);
             Console.WriteLine($"Максимальное значение: {max}\nМинимальное начение: {min}\nСреднее значение: {averVal}");
 
             //-----------------------------------------------------
@@ -166,15 +162,14 @@ namespace cycleAndArray
 
             int fibonachi = 1;
             int subsequFibonachi = 0;
-            int fibonachiCount = 0;
             int prevValue = 0;
             Console.Write($"{fibonachi} ");
-            while (fibonachiCount <= 11)
+            for (int i = 0; i <= 11; i++)
             {
                 prevValue = fibonachi;
                 fibonachi += subsequFibonachi;
-                fibonachiCount++;
                 subsequFibonachi = prevValue;
+                if (i == 0) fibonachi = 1;
                 Console.Write($"{fibonachi} ");
             }
             Console.WriteLine();
