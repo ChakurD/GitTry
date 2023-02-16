@@ -11,7 +11,23 @@ namespace startHWClass
         public string number;
         public string model;
         public int weight;
-        
+
+        public Phone()
+        { }
+
+        public Phone(long numberInit, string modelInit)
+        {
+            number = string.Format("{0:# (###) ###-##-##}", numberInit);
+            model = modelInit;
+        }
+
+        public Phone(long numberInit, string modelInit, int weightInit)
+        {
+            number = string.Format("{0:# (###) ###-##-##}", numberInit);
+            model = modelInit;
+            weight = weightInit;
+        }
+      
         public void ReceiveCall(string name)
         {
             Console.WriteLine($"Звонит {name}");
@@ -24,18 +40,5 @@ namespace startHWClass
         {
             Console.WriteLine($"Номер: {number}; Модель: {model}; Вес: {weight};");
         }
-        public Phone(long numberInit, string modelInit, int weightInit) 
-        {
-        number = string.Format("{0:# (###) ###-##-##}",numberInit);
-         model = modelInit;
-         weight = weightInit;
-        }
-        public Phone(long numberInit, string modelInit)
-        { 
-        number= string.Format("{0:# (###) ###-##-##}", numberInit);
-        model= modelInit;
-        }
-        public Phone()
-        { }
     }
 }
