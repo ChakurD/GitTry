@@ -6,7 +6,7 @@
         {
             Console.WriteLine("Введите характеристики телефонов(Номер, Модель , Вес):");
             string characteristics = Console.ReadLine();
-            string[] characteristicsSplit = characteristics.Split(' ',',','\\','.');
+            string[] characteristicsSplit = characteristics.Split(' ', ',', '\\', '.');
 
             long iphNumber = Convert.ToInt64(characteristicsSplit[0]);
             string iphModel = characteristicsSplit[1];
@@ -21,11 +21,11 @@
 
             samsung.weight = Convert.ToInt32(characteristicsSplit[5]);
 
-            huawei.number= string.Format("{0:# (###) ###-##-##}", Convert.ToInt64(characteristicsSplit[6]));
+            huawei.number = string.Format("{0:# (###) ###-##-##}", Convert.ToInt64(characteristicsSplit[6]));
             huawei.model = characteristicsSplit[7];
             huawei.weight = Convert.ToInt32(characteristicsSplit[8]);
-            
-            
+
+
             iphone.GetCharacteristics();
             samsung.GetCharacteristics();
             huawei.GetCharacteristics();
@@ -41,6 +41,14 @@
             iphone.GetNumber();
             samsung.GetNumber();
             huawei.GetNumber();
+
+            Console.WriteLine("Введите номера телефонов:");
+            string strNumbers = Console.ReadLine();
+            string[] arrNum = strNumbers.Split(' ',',','.');
+            iphone.SendMessage(arrNum);   
+
+
+
         }
     }
 }

@@ -40,5 +40,16 @@ namespace startHWClass
         {
             Console.WriteLine($"Номер: {number}; Модель: {model}; Вес: {weight};");
         }
+
+        public void SendMessage(params string[] numbers) 
+        { 
+            for(int i = 0; i < numbers.Length; i++ ) 
+            {
+                //string message = Console.ReadLine();
+                string numberToSendMessage = string.Format("{0:+375 (##) ###-##-##}", Convert.ToInt64(numbers[i]));
+                Console.WriteLine($"{numberToSendMessage}"); 
+            }
+        
+        }
     }
 }
