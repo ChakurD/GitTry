@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Clinic
 {
-    public class Dentist : Clinic
+    public class Dentist : Doctor
     {
-        public override void medication(int deseaceCode)
+        public override void Medication(int deseaceCode)
         {
             deseaceCode = 0;
             Console.WriteLine("Установлена пломба в зубе");

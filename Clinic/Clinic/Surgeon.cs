@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Clinic
 {
-    public class Surgeon : Clinic
+    public class Surgeon : Doctor
     {
-        public override void medication(int deseaseCode)
+        public override void Medication(int deseaseCode)
         {
             deseaseCode = 0 ;
             Console.WriteLine("Наложен гипс");

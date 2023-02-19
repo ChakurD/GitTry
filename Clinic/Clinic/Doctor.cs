@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Clinic
 {
-    public class Clinic
+    public class Doctor
     {
-        public int numbOfDoctor { get; set; }
-        public virtual int codeTreatment { get; set; } = 0;
-        public virtual void medication(int deseaseCode) 
+        public virtual void Medication(int deseaseCode) 
         {
             Console.WriteLine("Лечение");
         }

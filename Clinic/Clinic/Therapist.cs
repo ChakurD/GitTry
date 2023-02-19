@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Clinic
 {
-    public class Therapist : Clinic
+    public class Therapist : Doctor
     {
-        public override void medication(int deseaseCode) 
+        public override void Medication(int deseaseCode) 
         {
             deseaseCode = 0;
             Console.WriteLine("Выписан рецепт антибиотиков и даны указания по лечению");

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Clinic
 {
-    public class TreatmentPlan : Clinic
+    public class TreatmentPlan 
     {
-        public virtual int treatmentPlan { get; set; } = 0;
+        public  int TreatmentPlanForDoc { get; set; } = 0;
+        public TreatmentPlan(int initTreatmentPlan) { TreatmentPlanForDoc = initTreatmentPlan;  }
 
     }
 }

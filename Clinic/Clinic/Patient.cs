@@ -6,29 +6,29 @@ using System.Threading.Tasks;
 
 namespace Clinic
 {
-    public class Patient : TreatmentPlan
+    public class Patient 
     {
-        public override int treatmentPlan { get => base.treatmentPlan; set => base.treatmentPlan = value; }
+        public TreatmentPlan Plan { get; set; }
         public Patient(int deseaseCode) 
         {
-            treatmentPlan = deseaseCode;
+            Plan =new TreatmentPlan(deseaseCode);
         }
         public void DocApoitment( ) 
         {
-            if (treatmentPlan == 1)
+            if (Plan.TreatmentPlanForDoc == 1)
             {
                 Surgeon chiropractor = new Surgeon();
-                chiropractor.medication(treatmentPlan);
+                chiropractor.Medication(Plan.TreatmentPlanForDoc);
             }
-            if (treatmentPlan == 2)
+            if (Plan.TreatmentPlanForDoc == 2)
             {
                 Dentist teethDoctoir = new Dentist();
-                teethDoctoir.medication(treatmentPlan);
+                teethDoctoir.Medication(Plan.TreatmentPlanForDoc);
             }
-            if (treatmentPlan == 3)
+            if (Plan.TreatmentPlanForDoc == 3)
             {
                 Therapist soresDoctor = new Therapist();
-                soresDoctor.medication(treatmentPlan);
+                soresDoctor.Medication(Plan.TreatmentPlanForDoc);
             }
 
 
