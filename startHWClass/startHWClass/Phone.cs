@@ -21,10 +21,10 @@ namespace startHWClass
             model = modelInit;
         }
 
-        public Phone(long numberInit, string modelInit, int weightInit)
+        public Phone(long numberInit, string modelInit, int weightInit) : this( numberInit, modelInit) 
         {
-            number = string.Format("{0:# (###) ###-##-##}", numberInit);
-            model = modelInit;
+            //number = string.Format("{0:# (###) ###-##-##}", numberInit);
+            //model = modelInit;
             weight = weightInit;
         }
       
