@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DocumentAccountingSystem
 {
-    class ContractForTheSupplyOfGoods : Document 
+    public class ContractForTheSupplyOfGoods : Document, IShowDocumentInfo
     {
         private DateOnly documentDate;
         private int documentNumber;
@@ -26,8 +26,9 @@ namespace DocumentAccountingSystem
         public string ProductType { get; set; }
         public int ProductAmount { get; set; }
 
-        public ContractForTheSupplyOfGoods() 
+        public ContractForTheSupplyOfGoods()
         {
+            Console.WriteLine("---- Контракт на поставку товара -----");
             Console.WriteLine("Введите номер документа: ");
             documentNumber = int.Parse(Console.ReadLine());
             Console.WriteLine("Введите тип товара: ");
@@ -38,6 +39,20 @@ namespace DocumentAccountingSystem
             string dateMonthYear = Console.ReadLine();
             string[] dateMonthYearArr = dateMonthYear.Split('-');
             documentDate = new DateOnly(int.Parse(dateMonthYearArr[2]), int.Parse(dateMonthYearArr[1]), int.Parse(dateMonthYearArr[0]));
+            Thread.Sleep(400);
+            Console.Clear();
+        }
+        public ContractForTheSupplyOfGoods(int docNum, string prodType, int prodAmount,string dateMonthYear) 
+        {
+            documentNumber = docNum;
+            productType = prodType;
+            productAmount = prodAmount;
+            string[] dateMonthYearArr = dateMonthYear.Split('-');
+            documentDate = new DateOnly(int.Parse(dateMonthYearArr[2]), int.Parse(dateMonthYearArr[1]), int.Parse(dateMonthYearArr[0]));
+        }
+        public override void ShowDocumentInfo() 
+        {
+            Console.WriteLine($"Контракт на поставку товара\nДата создания документа: {documentDate}\nНомер Документа: {documentNumber}\nТип Продукта: {productType}\nКоличество продукта: {productAmount}");
         }
     }
 }

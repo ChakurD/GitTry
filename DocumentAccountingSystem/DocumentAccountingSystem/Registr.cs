@@ -9,8 +9,15 @@ namespace DocumentAccountingSystem
     public class Registr
     {
         private int numArrIndex;
-        public Object[] documents = new Object[10];
-        public int NumArrIndex { get; set; }
+        public Document[] documents = new Document[10];
+        public int NumArrIndex 
+        { get { return numArrIndex; }
+            set 
+            {
+                if (value < 11) numArrIndex = value;
+                else Console.WriteLine("Регистр заполнен, необходимо использовать другой регистр или очистить данный!");
+            }
+        }
         
         public Registr() 
         {
@@ -19,11 +26,16 @@ namespace DocumentAccountingSystem
 
         public void SaveDocumentInRegistr(Document doc ) 
         {
-            documents[NumArrIndex] = doc;
-            NumArrIndex++;
+            if (documents[NumArrIndex] == null) documents[NumArrIndex] = doc;
+            else
+            {
+                NumArrIndex++;
+                documents[NumArrIndex] = doc;
+            }
         }
-        public void ShowDocumentInfo(Object doc) 
+        public void ShowDocumentInfo(Document doc) 
         {
+            doc.ShowDocumentInfo();
         }
     }
 }

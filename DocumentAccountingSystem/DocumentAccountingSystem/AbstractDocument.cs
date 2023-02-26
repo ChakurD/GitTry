@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace DocumentAccountingSystem
 {
-    abstract class Document
+    public abstract class Document : IShowDocumentInfo
     {
         public abstract DateOnly DocumentDate { get; set; }
         public abstract int DocumentNumber { get; set; }
         public Document() { }
+        public abstract void ShowDocumentInfo(); 
     }
 }
