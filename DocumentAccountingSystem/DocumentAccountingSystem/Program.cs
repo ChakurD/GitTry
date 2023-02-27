@@ -4,10 +4,10 @@
     {
         static void Main(string[] args)
         {
-            ContractForTheSupplyOfGoods syplyes = new ContractForTheSupplyOfGoods();
-            FinancialInvoice federal = new FinancialInvoice();
-            ContractWithEmployer employer1 = new ContractWithEmployer();
-            Registr regDoc = new Registr();
+            var syplyes = new ContractForTheSupplyOfGoods();
+            var federal = new FinancialInvoice();
+            var employer1 = new ContractWithEmployer();
+            var regDoc = new Registr();
             regDoc.SaveDocumentInRegistr(federal);
             regDoc.SaveDocumentInRegistr(syplyes);
             regDoc.SaveDocumentInRegistr(employer1);

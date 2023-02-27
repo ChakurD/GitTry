@@ -50,14 +50,12 @@ namespace AbstractClassFigure
         }
         public override double Perimeter()
         {
-            double perimetr = sideOfTheTriangleA + sideOfTheTriangleB + sideOfTheTriangleC;
-            halfPerimetr = perimetr / 2;
-            return perimetr;
+            halfPerimetr = (sideOfTheTriangleA + sideOfTheTriangleB + sideOfTheTriangleC) / 2;
+            return sideOfTheTriangleA + sideOfTheTriangleB + sideOfTheTriangleC;
         }
         public override double Square()
         {
-            double square =  Math.Sqrt(halfPerimetr*(halfPerimetr - sideOfTheTriangleA)* (halfPerimetr - sideOfTheTriangleB)* (halfPerimetr - sideOfTheTriangleC));
-            return square;
+            return  Math.Sqrt(halfPerimetr*(halfPerimetr - sideOfTheTriangleA)* (halfPerimetr - sideOfTheTriangleB)* (halfPerimetr - sideOfTheTriangleC));
         }
     }
 }

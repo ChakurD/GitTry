@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AbstractClassFigure
 {
-    public class Rectangle : Triangle
+    public class Rectangle : Figure
     {
         private double sideOfTheRectangleA;
         private double sideOfTheRectangleB;
@@ -36,13 +36,11 @@ namespace AbstractClassFigure
 
         public override double Perimeter()
         {
-            double perimetr = 2 * (sideOfTheRectangleA + sideOfTheRectangleB);
-            return perimetr;
+            return 2 * (sideOfTheRectangleA + sideOfTheRectangleB);
         }
         public override double Square()
         {
-            double square = sideOfTheRectangleA * sideOfTheRectangleB;
-            return square;
+            return sideOfTheRectangleA * sideOfTheRectangleB;
         }
     }
 }

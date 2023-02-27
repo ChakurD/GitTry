@@ -10,8 +10,6 @@ namespace JobTitle
     {
         private string titleJob;
         private int experience;
-        public string TittleJob { get; set; }
-        public string Experience { get; set; }
 
         public Accountant(int exp)
         {

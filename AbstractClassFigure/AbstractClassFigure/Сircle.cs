@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AbstractClassFigure
 {
-    public class Circle : Rectangle
+    public class Circle : Figure
     {
         private double radius;
         private double pi;
@@ -31,13 +31,13 @@ namespace AbstractClassFigure
         }
         public override double Perimeter()
         {
-            double perimetr = 2 * pi * radius;
-            return perimetr;
+            return  2 * pi * radius;
+            
         }
         public override double Square()
         {
-            double square = pi * radius * radius;
-        return square;
+            return pi * radius * radius;
+        
         }
     }
 }
