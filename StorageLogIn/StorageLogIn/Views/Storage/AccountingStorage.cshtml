@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Accounting Storage";
+}
+@model StorageItemsModel[]
+
+<h1>@ViewData["Title"]</h1>
+<table>
+    @foreach(var item in Model)
+    {
+        @if (@item.ItemCountShoudBe == @item.ItemCount)
+        {
+            <tr bgcolor="green">
+                <td>@item.ItemName</td>
+                <td>@item.ItemType</td>
+                <td>@item.ItemCode</td>
+                <td>@item.ItemCountShoudBe</td>
+                <td>@item.ItemCount</td>
+            </tr>
+        }else
+        {
+            <tr bgcolor="red">
+                <td>@item.ItemName</td>
+                <td>@item.ItemType</td>
+                <td>@item.ItemCode</td>
+                <td>@item.ItemCountShoudBe</td>
+                <td>@item.ItemCount</td>
+            </tr>
+        }
+
+    }
+</table>
+
+

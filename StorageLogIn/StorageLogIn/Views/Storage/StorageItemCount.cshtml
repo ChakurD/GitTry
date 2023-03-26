@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Storage";
+}
+@model StorageItemsModel[]
+<h1>@ViewData["Title"]</h1>
+@using (Html.BeginForm("StorageItemCount","Storage",FormMethod.Post))
+{
+    @for(int i=0; i<Model.Length; i++)
+    {
+        @Html.EditorFor(m => Model[i])
+    }
+    <p>
+        <input type="submit" value="Transfer"></input>
+    </p>
+}
+
+
+
+
+
