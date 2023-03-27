@@ -29,11 +29,6 @@ namespace StorageLogIn.Controllers
             return View();
         }
 
-        public IActionResult AccountingStorage()
-        {
-            return View(items);
-        }
-
         [HttpGet]
         public IActionResult StorageItemCount()
         {

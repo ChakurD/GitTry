@@ -5,13 +5,31 @@
 <h1>@ViewData["Title"]</h1>
 @using (Html.BeginForm("StorageItemCount","Storage",FormMethod.Post))
 {
+    <table>
+        <tr>
+                <td></td>
+                <td height="75" align="center" scope="col"><p>Имя предмета</p></td>
+                <td height="75" align="center" scope="col"><p>Количество,<br> сколько должно быть</p></td>
+                <td height="75" align="center" scope="col"><p>Количество,<br> сколько есть</p></td>
+                <td height="75" align="center" scope="col"><p>Тип предмета</p></td>
+                <td height="75" align="center" scope="col"><p>Код предмета</p></td>
+        </tr>
     @for(int i=0; i<Model.Length; i++)
     {
-        @Html.EditorFor(m => Model[i])
+        <tr>
+                <td scope="row">@i</td>
+                <td>@Html.EditorFor(m=>Model[i].ItemName)</td>
+                <td>@Html.EditorFor(m => Model[i].ItemCountShoudBe)</td>
+                <td>@Html.EditorFor(m=>Model[i].ItemCount)</td>
+                <td>@Html.EditorFor(m=>Model[i].ItemType)</td>
+                <td>@Html.EditorFor(m=>Model[i].ItemCode)</td>
+        </tr>
     }
+    </table>
     <p>
         <input type="submit" value="Transfer"></input>
     </p>
+
 }
 
 
