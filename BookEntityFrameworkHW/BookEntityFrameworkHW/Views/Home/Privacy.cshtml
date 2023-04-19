@@ -1,0 +1,29 @@
+﻿@using BookEntityFrameworkHW.Models
+@model List<Book>
+
+<h2>People</h2>
+<table class="table">
+    <tr>
+        <td>Id</td>
+        <td>Title</td>
+        <td>CreatedDate</td>
+        <td>AuthorName</td>
+        <td>Description</td>
+    </tr>
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>@p.Id</td>
+            <td>@p.Title</td>
+            <td>@p.CreatedDate.ToString("dd.MM.yyyy")</td>
+            <td>@p.AuthorName</td>
+            <td>@p.Description</td>
+            <td>
+                <a asp-action="Edit" asp-controller="Home" asp-route-id="@p.Id">Изменить</a>
+                <a asp-action="Delete" asp-controller="Home" asp-route-id="@p.Id">Удалить</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<a asp-action="Create"> Добавить новую книгу</a>
