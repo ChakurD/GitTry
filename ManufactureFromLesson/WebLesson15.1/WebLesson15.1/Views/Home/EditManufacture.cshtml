@@ -1,0 +1,24 @@
+﻿@using WebLesson15._1.Models.EFDto
+@model Manufacture
+@{
+    ViewBag.Title = "Изменение производства";
+}
+<form  method="post"  asp-action="EditManufacture" asp-controller="home" asp-route-id="@Model.Id">
+    < <div class="form-group">
+        <label asp-for="Name" class="control-label">Имя</label>
+        <input type="text" asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="CountOfMembers" class="control-label">Число сотрудников</label>
+        <input type="text" asp-for="CountOfMembers" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="CardId" class="control-label">Кредитная карта предприятия</label>
+        <select asp-for="CardId" class="form-control" asp-items="ViewBag.Cards">
+            <option value="">-- Select Credit Card --</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Сохранить" class="btn btn-default" />
+    </div>
+</form>

@@ -1,0 +1,39 @@
+﻿@*@{
+    ViewData["Title"] = "Privacy Policy";
+}*@
+@*@model int[]*@
+@*<h1>@ViewData["Title"]</h1>
+
+<p>Hello All,How Are You? This is privacy.</p>
+<h1>Hello I'm H1!</h1>
+<p>Hello All,How Are You? This is privacy.</p>
+<h1>Hello I'm H1!</h1>*@
+@*@foreach(var item in Model)
+{
+<div>@item</div>
+}*@
+@using WebLesson15._1.Models.EFDto
+@model List<Manufacture>
+
+<h2>People</h2>
+<table class="table">
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>CountOfMembers</td>
+        <td>Card</td>
+    </tr>
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>@p.Id</td>
+            <td>@p.Name</td>
+            <td>@p.CountOfMembers</td>
+            <td>@p.Card.Name</td>
+            <td>
+                <a asp-action="EditManufacture" asp-controller="Home" asp-route-id="@p.Id">Изменить</a>
+                <a asp-action="Delete" asp-controller="Home" asp-route-id="@p.Id">Удалить</a>
+            </td>
+        </tr>
+    }
+</table>

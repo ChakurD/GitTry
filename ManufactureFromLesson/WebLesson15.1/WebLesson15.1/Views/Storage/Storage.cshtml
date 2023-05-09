@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Storage";
+}
+@model StorageViewModel[]
+<h1>@ViewData["Title"]</h1>
+<table class="table">
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Count</td>
+        <td>Country</td>
+        <td>Category</td>
+    </tr>
+    
+        @foreach(var prod in Model)
+        {
+            <tr>
+            <td>@prod.Id</td>
+            <td>@prod.Name</td>
+            <td>@prod.Count</td>
+            <td>@prod.Country</td>
+            <td>@prod.Category</td>
+            </tr>
+        }
+</table>
+        
+    

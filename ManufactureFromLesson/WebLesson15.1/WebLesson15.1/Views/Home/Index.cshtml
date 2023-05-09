@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+   @* @{
+        var f = 13;
+        <div>@f</div>
+    }
+    @{
+        var number = 27;
+        <div>@number</div>
+    }
+    @(f + number)*@
+    @*@{
+        var f = 13;
+        var number = 27;
+        <div>@(f + number)</div>
+    }*@
+    @*@{
+        string[] cars =  { "audi", "peugo", "ferrari" };
+    }
+    <ul>
+        @for(int i =0;i<cars.Length;i++){
+        <li>@cars[i]</li>
+        }
+    </ul>
+
+    <ul>
+        @foreach(var car in cars)
+        {
+            <li>@car</li>
+        }
+    </ul>
+    <ol>
+        @{int g = 0;}
+        @while (g<cars.Length)
+        {
+            <li>@cars[g++]</li>
+        }
+    </ol>*@
+  @*  @functions
+    {
+        public double Multiply(int a, int b, int c, int d)
+        {
+            return a * b * c * d;    
+        }
+    }
+    <p>Multiply of 1 2 13 23 is:<b> @Multiply(1,2,13,23)</b></p>*@
+ @*   <h1>@ViewData["ViewDataTestMessage"]</h1>
+    <div>@ViewData["Number"]</div>
+    <div>@ViewData["Bool"]</div>*@
+   @* <div>@ViewBag.SomeText</div>
+    <p>@ViewBag.Array.Length</p>
+    @foreach (var arr in ViewBag.Array)
+    {
+        <div>@arr</div>
+    }*@
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+   @* @DateTime.Now.ToString()*@
+</div>
