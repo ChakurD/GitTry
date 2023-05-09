@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Registration";
+}
+@model RegistrationModel
+<h1>@ViewData["Title"]</h1>
+@using (Html.BeginForm("Registration","Registration",FormMethod.Post))
+{
+    
+        <p>@Html.LabelFor(m=>m.Name,"Name")<br>
+    @Html.TextBoxFor(m=>m.Name)
+    </p>
+         <p>@Html.LabelFor(m=>m.Surname,"Surname")<br>
+    @Html.TextBoxFor(m=>m.Surname)
+    </p>
+         <p>@Html.LabelFor(m=>m.Country,"Country")<br>
+    @Html.TextBoxFor(m=>m.Country)
+    </p>
+         <p>@Html.LabelFor(m=>m.Email,"Email")<br>
+    @Html.TextBoxFor(m=>m.Email)
+    </p>
+    <p>@Html.LabelFor(m=>m.Age,"Age")<br>
+    @Html.TextBoxFor(m=>m.Age," ", new {type="number"})
+    </p>
+    <p>@Html.LabelFor(m=>m.Login,"Login")<br>
+    @Html.TextBoxFor(m=>m.Login)
+    </p>
+    <p>@Html.LabelFor(m=>m.Password,"Password")<br>
+    @Html.TextBoxFor(m=>m.Password," ", new {type="password"})
+    </p>
+    <p>
+    <input type="submit" value="Registr"></input>
+    </p>
+}
+        
+    
