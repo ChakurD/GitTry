@@ -170,6 +170,7 @@ namespace WebLesson15._1.Controllers
         {
 <<<<<<< Updated upstream
             //var users  = db.Users.ToList();
+=======
 >>>>>>> Stashed changes
             var manufactures = db.Manufactures.Include(m=>m.Card).ToList();
             return View(manufactures);
