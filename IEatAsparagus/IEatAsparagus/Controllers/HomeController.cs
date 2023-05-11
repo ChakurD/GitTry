@@ -8,12 +8,10 @@ namespace IEatAsparagus.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private ApplicationContext db;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationContext context)
+        public HomeController( ApplicationContext context)
         {
-            _logger = logger;
             db = context;
         }
 
@@ -44,35 +42,22 @@ namespace IEatAsparagus.Controllers
             public IActionResult Lenta()
         {
             var asparagus = db.AsparagusLovers.ToList();
-            var orderBy = asparagus.OrderBy(x => x.CreateFormDate);
-            var groupBy = orderBy.GroupBy(a => a.Email);
-            var size = groupBy.Count();
-            AsparagusLoverViewModel[] lent = new AsparagusLoverViewModel[size];
+            var sortedListAsparagusEater = asparagus.OrderBy(x => x.CreateFormDate).GroupBy(a => a.Email);
+            AsparagusLoverViewModel[] lent = new AsparagusLoverViewModel[sortedListAsparagusEater.Count()];
             int i = 0;
 
-                foreach (var item in groupBy)
+                foreach (var item in sortedListAsparagusEater)
                 {
-
-                    var lastRegistrAsparagus = item.Last();
-                    var countRegistr = item.Count();
                     AsparagusLoverViewModel modelForSet = new AsparagusLoverViewModel
                     {
-                        Name = lastRegistrAsparagus.Name,
-                        OccuranceCount = countRegistr,
-                        Date = lastRegistrAsparagus.CreateFormDate
+                        Name = item.Last().Name,
+                        OccuranceCount = item.Count(),
+                        Date = item.Last().CreateFormDate
                     };
                     lent.SetValue(modelForSet,i);
                 i++;
                 };
             
-                //var groupList = orderList.MaxBy(a => a.Where(o => o.Email.Equals(asparagus[0].Email)));
-                //var convert = groupBy.Select(u => new AsparagusLoverViewModel
-                //{
-                //    Name = u.ElementAt(),
-                //    //OccuranceCount = 
-                //    //Date = u.CreateFormDate.Equals(asparagus.Where(a => a.CreateFormDate))
-
-                //}).ToList();
            
             return View(lent);
         }
