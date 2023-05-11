@@ -14,9 +14,15 @@ namespace WebLesson15._1.Controllers
             StorageViewModel[] products;
             products = new StorageViewModel[]
             {
+<<<<<<< Updated upstream
             new StorageViewModel(1,"Orange",50,"Italy",product.fruits),
             new StorageViewModel(2,"Beaf steak",20,"Belarus",product.meat),
             new StorageViewModel(3,"cheese",38,"Poland",product.dairy)
+=======
+            new StorageViewModel{Id = 1,Name = "Orange",Count = 50,Country = "Italy",Category = product.fruits },
+            new StorageViewModel{Id = 2,Name ="Beaf steak",Count = 20,Country = "Belarus",Category = product.meat },
+            new StorageViewModel{Id = 3,Name ="cheese",Count = 38,Country = "Poland",Category = product.dairy }
+>>>>>>> Stashed changes
                 };
             _logger = logger;
         }

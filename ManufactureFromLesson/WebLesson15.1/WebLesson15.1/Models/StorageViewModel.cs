@@ -10,6 +10,7 @@ namespace WebLesson15._1.Models
 
         public StorageViewModel() { }
 
+<<<<<<< Updated upstream
         public StorageViewModel(int id, string name, int count, string country, Enum category)
         {
             Id = id;
@@ -18,5 +19,7 @@ namespace WebLesson15._1.Models
             Country = country;
             Category = category;
         }
+=======
+>>>>>>> Stashed changes
     }
 }

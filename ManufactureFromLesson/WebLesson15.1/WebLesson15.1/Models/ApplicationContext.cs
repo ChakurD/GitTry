@@ -14,6 +14,7 @@ namespace WebLesson15._1.Models
         public DbSet<ManufactureCreditCard> Cards { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options)  : base(options)
         { 
+<<<<<<< Updated upstream
         //Database.EnsureCreated();
         }
 
@@ -38,5 +39,10 @@ namespace WebLesson15._1.Models
             //new User { Id = 5, Name = "Valya", LastName = "Bobishev", Age = 41, Addres = "Novaya 76" }
             //);
         }
+=======
+        }
+
+        
+>>>>>>> Stashed changes
     }
 }

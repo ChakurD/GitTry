@@ -16,13 +16,21 @@ namespace WebLesson15._1.Models
         public int Age { get; set; }
 
         [Required]
+<<<<<<< Updated upstream
         [Range(5,15)]
+=======
+        //[Range(5,15)]
+>>>>>>> Stashed changes
         public string Password { get; set; }
 
         [Required]
         public string Login { get; set; }
 
+<<<<<<< Updated upstream
         [EmailAddress]
+=======
+        //[EmailAddress]
+>>>>>>> Stashed changes
         [Required]
         public string Email { get; set; }
 

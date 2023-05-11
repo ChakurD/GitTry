@@ -12,12 +12,19 @@ namespace WebLesson15._1.Controllers
 {
     public class HomeController : Controller
     {
+<<<<<<< Updated upstream
         private readonly ILogger<HomeController> _logger;
         private ApplicationContext db;
 
         public HomeController(ILogger<HomeController> logger, ApplicationContext context)
         {
             _logger = logger;
+=======
+        private ApplicationContext db;
+
+        public HomeController( ApplicationContext context)
+        {
+>>>>>>> Stashed changes
             db = context;
         }
 
@@ -32,6 +39,7 @@ namespace WebLesson15._1.Controllers
             return View();
         }
 
+<<<<<<< Updated upstream
         //public IActionResult Privacy()
         //{
         //    var httpContext = ControllerContext.HttpContext;
@@ -52,6 +60,9 @@ namespace WebLesson15._1.Controllers
         //    //return View(objects);
         //    return View();
         //}
+=======
+        
+>>>>>>> Stashed changes
 
         public IActionResult Road()
         {
@@ -59,7 +70,10 @@ namespace WebLesson15._1.Controllers
             ViewData["Number"] = 15;
             ViewData["Bool"] = false;
             return View();
+<<<<<<< Updated upstream
             //return Content("My name Path Road");
+=======
+>>>>>>> Stashed changes
         }
 
         [HttpGet]
@@ -78,7 +92,10 @@ namespace WebLesson15._1.Controllers
 
         public async Task<IActionResult> Privacy()
         {
+<<<<<<< Updated upstream
             //var users  = db.Users.ToList();
+=======
+>>>>>>> Stashed changes
             var users = db.Users.Include(m => m.Manufacture).ThenInclude(n => n.Card).ToList();
             return View(users);
         }
@@ -92,10 +109,15 @@ namespace WebLesson15._1.Controllers
                 Text = m.Name
             });
             ViewBag.Manufacture = manufactureItems;
+<<<<<<< Updated upstream
             //ViewBag.Manufacture = manufactures;
 
             return View();
             //return View();
+=======
+
+            return View();
+>>>>>>> Stashed changes
         }
 
         [HttpPost]
@@ -114,11 +136,16 @@ namespace WebLesson15._1.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
                 
+<<<<<<< Updated upstream
             //db.Users.Add(result);
             //db.SaveChanges();
             //return RedirectToAction("Index");
         }
         public IActionResult Edit(int? id)
+=======
+        }
+        public IActionResult EditUser(int? id)
+>>>>>>> Stashed changes
         {
             User user = db.Users.FirstOrDefault(p => p.Id == id);
             if (user != null)
@@ -128,7 +155,11 @@ namespace WebLesson15._1.Controllers
         }
 
         [HttpPost]
+<<<<<<< Updated upstream
         public IActionResult Edit(User user)
+=======
+        public IActionResult EditUser(User user)
+>>>>>>> Stashed changes
         {
             db.Users.Update(user);
             db.SaveChanges();
@@ -137,7 +168,9 @@ namespace WebLesson15._1.Controllers
 
         public async Task<IActionResult> Manufactures()
         {
+<<<<<<< Updated upstream
             //var users  = db.Users.ToList();
+>>>>>>> Stashed changes
             var manufactures = db.Manufactures.Include(m=>m.Card).ToList();
             return View(manufactures);
         }
