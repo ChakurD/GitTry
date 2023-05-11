@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "Lenta";
+}
+<h1>@ViewData["Title"]</h1>
+@using IEatAsparagus
+@model AsparagusLoverViewModel[]
+@foreach(var asparagus in Model)
+{
+    <div>@asparagus.Date  @asparagus.Name заходил @asparagus.OccuranceCount раз </div>
+}
