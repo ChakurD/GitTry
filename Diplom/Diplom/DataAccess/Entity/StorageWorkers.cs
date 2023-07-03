@@ -8,6 +8,6 @@ namespace Diplom.DataAccess.Entity
     {
         public int StorageWorkersId { get; set; }
        public virtual ICollection<User> Users { get; set; }
-        public int StorageId { get; set; }
+        public Storage Storage { get; set; }
     }
 }

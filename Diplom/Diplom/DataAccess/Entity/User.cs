@@ -18,9 +18,9 @@ namespace Diplom.DataAccess.Entity
         [MaxLength(45)]
         [Required]
         public string JobTittle { get; set; }
-        public int StorageWorkersId { get; set; }
+        public int? StorageWorkersId { get; set; }
         public StorageWorkers StorageWorkers { get; set; }
-        public int ResponsForItemId { get; set; }
+        public int? ResponsForItemId { get; set; }
         public ResponsForItem ResponsForItem { get; set; }
     }
 }

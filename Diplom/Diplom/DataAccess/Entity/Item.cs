@@ -20,10 +20,10 @@ namespace Diplom.DataAccess.Entity
         [Required]
         public decimal Price { get; set; }
         public Storage Storage { get; set; }
-        public int StoregeId { get; set; }
+        public int? StorageId { get; set; }
         public Category Category { get; set; }
-        public int CatregoryId { get; set; }
+        public int CategoryId { get; set; }
         public ResponsForItem ResponsForItem { get; set; }
-        public int ResponsForItemId { get; set; }
+        public int? ResponsForItemId { get; set; }
     }
 }

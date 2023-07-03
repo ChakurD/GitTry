@@ -7,7 +7,7 @@ namespace Diplom.DataAccess.Entity
     {
 
         public int ResponsForItemId { get; set; }
-        public int UserId { get; set; }
+        public User User { get; set; }
         public virtual ICollection<Item> Items { get; set; }
     }
 }

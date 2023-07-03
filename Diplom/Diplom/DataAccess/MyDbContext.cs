@@ -1,5 +1,8 @@
 ﻿using Diplom.DataAccess.Entity;
 using Microsoft.EntityFrameworkCore;
+using Diplom.Controllers;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Security.Cryptography;
 
 namespace Diplom.DataAccess
 {
@@ -40,12 +43,37 @@ namespace Diplom.DataAccess
                    Description = "В этой категории находяться электроинструменты(дрель, шуруповерт, болгарка и т.д.)",
                }
                );
+            modelBuilder.Entity<StorageWorkers>().HasData(
+               new StorageWorkers
+               {
+                   StorageWorkersId = 1,
+               }
+               );
+            modelBuilder.Entity<StorageWorkers>().HasData(
+                new StorageWorkers
+                {
+                    StorageWorkersId = 2,
+                }
+                );
+            modelBuilder.Entity<ResponsForItem>().HasData(
+              new ResponsForItem
+              {
+                  ResponsForItemId = 1,
+              }
+              );
+            modelBuilder.Entity<ResponsForItem>().HasData(
+                new ResponsForItem
+                {
+                    ResponsForItemId = 2,
+                }
+                );
             modelBuilder.Entity<Storage>().HasData(
                new Storage
                {
                    StorageId = 1,
                    Name = "Склад Кальварийской",
-                   Addres = "ул.Кальваарийская д.57"
+                   Addres = "ул.Кальваарийская д.57",
+                   StorageWorkersId = 1,
                }
                );
             modelBuilder.Entity<Storage>().HasData(
@@ -53,30 +81,19 @@ namespace Diplom.DataAccess
                 {
                     StorageId = 2,
                     Name = "Склад Трихомирова",
-                    Addres = "ул.Трихомирова д.12"
-                }
-                );
-            modelBuilder.Entity<StorageWorkers>().HasData(
-               new StorageWorkers
-               {
-                   StorageWorkersId = 1,
-                   StorageId = 1,
-               }
-               );
-            modelBuilder.Entity<StorageWorkers>().HasData(
-                new StorageWorkers
-                {
+                    Addres = "ул.Трихомирова д.12",
                     StorageWorkersId = 2,
-                    StorageId = 2,
                 }
                 );
+            
             modelBuilder.Entity<User>().HasData(
             new User
             {
+
                 UserId = 1,
                 FirstName = "Виталий",
                 SecondName = "Позднев",
-                HashPassword = "123jobpas",
+                HashPassword = CreateHashPassword("123jobpas"),
                 Login = "VitJob123",
                 JobTittle = "Складовщик",
                 StorageWorkersId = 1,
@@ -88,10 +105,11 @@ namespace Diplom.DataAccess
                 UserId = 2,
                 FirstName = "Александр",
                 SecondName = "Довольный",
-                HashPassword = "jobpastut",
+                HashPassword = CreateHashPassword("jobAstat"),
                 Login = "AleksJob",
                 JobTittle = "Заведующий складом",
                 StorageWorkersId = 2,
+                ResponsForItemId = 1,
             }
             );
             modelBuilder.Entity<User>().HasData(
@@ -100,7 +118,7 @@ namespace Diplom.DataAccess
                 UserId = 3,
                 FirstName = "Федор",
                 SecondName = "Кручев",
-                HashPassword = "admin",
+                HashPassword = CreateHashPassword("admin"),
                 Login = "admin",
                 JobTittle = "администратор",
             }
@@ -111,9 +129,10 @@ namespace Diplom.DataAccess
                 UserId = 4,
                 FirstName = "Григорий",
                 SecondName = "Морозов",
-                HashPassword = "jobScan",
+                HashPassword = CreateHashPassword("jobScan"),
                 Login = "ElectrickGrig",
                 JobTittle = "Электрик",
+                ResponsForItemId = 2,
             }
             );
 
@@ -128,8 +147,8 @@ namespace Diplom.DataAccess
                   Description = "Перчатки латексные с сеткой для работы на производстве",
                   Count = 150,
                   Price = 21.9M,
-                  StoregeId = 2,
-                  CatregoryId = 2,
+                  StorageId = 2,
+                  CategoryId = 2,
               }
               );
 
@@ -145,9 +164,9 @@ namespace Diplom.DataAccess
                Description = "Перчатки латексные с сеткой для работы на производстве",
                Count = 5,
                Price = 21.9M,
-               StoregeId = 2,
-               CatregoryId = 2,
-               ResponsForItemId = 3,
+               StorageId = 2,
+               CategoryId = 2,
+               ResponsForItemId = 2,
            }
                 );
             modelBuilder.Entity<Item>().HasData(
@@ -161,8 +180,8 @@ namespace Diplom.DataAccess
                     Description = "Шуруповерт с набором битам для выполнения различных работа",
                     Count = 2,
                     Price = 400,
-                    StoregeId = 2,
-                    CatregoryId = 3,
+                    StorageId = 2,
+                    CategoryId = 3,
                 }
                 );
             modelBuilder.Entity<Item>().HasData(
@@ -176,8 +195,8 @@ namespace Diplom.DataAccess
                     Description = "Шуруповерт с набором битам для выполнения различных работа",
                     Count = 1,
                     Price = 400,
-                    CatregoryId = 3,
-                    ResponsForItemId = 3,
+                    CategoryId = 3,
+                    ResponsForItemId = 2,
                 }
                 );
             modelBuilder.Entity<Item>().HasData(
@@ -191,34 +210,25 @@ namespace Diplom.DataAccess
                    Description = "Стул компьтерный с различными регулировками, металический",
                    Count = 8,
                    Price = 239,
-                   StoregeId = 2,
-                   CatregoryId = 1,
-                   ResponsForItemId = 2,
+                   StorageId = 2,
+                   CategoryId = 1,
+                   ResponsForItemId = 1,
                }
                );
 
-            modelBuilder.Entity<ResponsForItem>().HasData(
-                new ResponsForItem
-                {
-                    ResponsForItemId = 1,
-                    UserId = 1,
-                }
-                );
-            modelBuilder.Entity<ResponsForItem>().HasData(
-                new ResponsForItem
-                {
-                    ResponsForItemId = 2,
-                    UserId = 2,
-                }
-                );
-            modelBuilder.Entity<ResponsForItem>().HasData(
-                new ResponsForItem
-                {
-                    ResponsForItemId = 3,
-                    UserId = 4,
-                }
-                );
           
+
+        }
+        static string CreateHashPassword(string password)
+        {
+            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
+            string hashPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: password!,
+            salt: salt,
+            prf: KeyDerivationPrf.HMACSHA256,
+            iterationCount: 100000,
+            numBytesRequested: 256 / 8)); ;
+            return hashPassword;
         }
     }
 }

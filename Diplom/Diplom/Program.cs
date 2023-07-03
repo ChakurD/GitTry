@@ -3,6 +3,7 @@ using Diplom.DataAccess.DbPatterns;
 using Diplom.DataAccess.DbPatterns.Interfaces;
 using Diplom.Services.Interfaces;
 using Diplom.Services.Service;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Diplom

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Diplom.DataAccess.Entity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Diplom.Models
 {
@@ -21,5 +22,8 @@ namespace Diplom.Models
         [Required(ErrorMessage = "Password not specified")]
         [Compare("Password", ErrorMessage = "Password entered is incorrect")]
         public string ConfirmPassword { get; set; }
+        public int? StorageWorkersId { get; set; }
+        public IEnumerable<StorageWorkers>? StorageWorkers { get; set; }
+        public IEnumerable<Storage>? Storages { get; set; }
     }
 }

@@ -13,8 +13,8 @@ namespace Diplom.DataAccess.Entity
         [MaxLength(100)]
         public string Addres { get; set; }
         public virtual ICollection<Item> Items { get; set; }
-        public int StorageWorkersId { get; set; }
         public StorageWorkers StorageWorkers { get; set; }
+        public int StorageWorkersId { get; set; }
 
     }
 }
