@@ -3,8 +3,13 @@ using Diplom.DataAccess.DbPatterns;
 using Diplom.DataAccess.DbPatterns.Interfaces;
 using Diplom.Services.Interfaces;
 using Diplom.Services.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Diplom
 {
@@ -25,6 +30,22 @@ namespace Diplom
             builder.Services.AddTransient<ICategoryServices, CategoryService>();
             builder.Services.AddTransient<IItemServices, ItemService>();
             builder.Services.AddTransient<IStorageServices, StorageService>();
+            
+            builder.Services.AddAuthorization();
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidateAudience = true,
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        ValidateLifetime = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                    };
+                });
 
             var app = builder.Build();
 
@@ -36,14 +57,22 @@ namespace Diplom
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapRazorPages();
+            });
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
+
         }
     }
 }

@@ -15,6 +15,9 @@ namespace Diplom.DataAccess.Entity
         public string HashPassword { get; set; }
         [Required]
         public string Login { get; set; }
+        [Required]
+        public int RoleId { get; set; }
+        public Role Role { get; set; }
         [MaxLength(45)]
         [Required]
         public string JobTittle { get; set; }

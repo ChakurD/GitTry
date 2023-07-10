@@ -19,6 +19,24 @@ namespace Diplom.DataAccess
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Role>().HasData(
+                new Role 
+                {
+                    RoleId = 1,
+                    RoleName = "Admin"
+                });
+            modelBuilder.Entity<Role>().HasData(
+               new Role
+               {
+                   RoleId = 2,
+                   RoleName = "Manager"
+               });
+            modelBuilder.Entity<Role>().HasData(
+               new Role
+               {
+                   RoleId = 3,
+                   RoleName = "Worker"
+               });
             modelBuilder.Entity<Category>().HasData(
                new Category
                {
@@ -96,6 +114,7 @@ namespace Diplom.DataAccess
                 HashPassword = CreateHashPassword("123jobpas"),
                 Login = "VitJob123",
                 JobTittle = "Складовщик",
+                RoleId = 3,
                 StorageWorkersId = 1,
             }
             );
@@ -108,6 +127,7 @@ namespace Diplom.DataAccess
                 HashPassword = CreateHashPassword("jobAstat"),
                 Login = "AleksJob",
                 JobTittle = "Заведующий складом",
+                RoleId = 2,
                 StorageWorkersId = 2,
                 ResponsForItemId = 1,
             }
@@ -121,6 +141,7 @@ namespace Diplom.DataAccess
                 HashPassword = CreateHashPassword("admin"),
                 Login = "admin",
                 JobTittle = "администратор",
+                RoleId = 1
             }
             );
             modelBuilder.Entity<User>().HasData(
@@ -132,6 +153,7 @@ namespace Diplom.DataAccess
                 HashPassword = CreateHashPassword("jobScan"),
                 Login = "ElectrickGrig",
                 JobTittle = "Электрик",
+                RoleId = 3,
                 ResponsForItemId = 2,
             }
             );
