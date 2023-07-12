@@ -1,8 +1,11 @@
-﻿using Diplom.DataAccess;
+﻿using Azure.Core;
+using Diplom.DataAccess;
 using Diplom.DataAccess.Entity;
 using Diplom.Models;
 using Diplom.Services.Interfaces;
 using Diplom.Services.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Identity;
@@ -54,6 +57,7 @@ namespace Diplom.Controllers
 
 
                 var userValid = await _userService.GetUser(model.Login);
+                byte[] salt = RandomNumberGenerator.GetBytes(128 / 8); ;
                 if (userValid == null && model.Password.Equals(model.ConfirmPassword))
                 {
                     var user = new User
@@ -61,7 +65,7 @@ namespace Diplom.Controllers
                         Login = model.Login,
                         FirstName = model.FirstName,
                         SecondName = model.SecondName,
-                        HashPassword = CreateHashPassword(model.ConfirmPassword),
+                        HashPassword = CreateHashPassword(model.ConfirmPassword, salt),
                         JobTittle = model.JobTittle,
                     };
                     await _userService.CreateUser(user);
@@ -79,7 +83,7 @@ namespace Diplom.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Login()
         {
 
@@ -87,21 +91,21 @@ namespace Diplom.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Login(UserLogin userLogin)
         {
             var user = await _userService.GetUser(userLogin.Login);
-            if (user != null && CreateHashPassword(userLogin.HashPassword).Equals(user.HashPassword))
+            byte[] salt = user.Salt;
+            if (user != null && CreateHashPassword(userLogin.HashPassword, salt).Equals(user.HashPassword))
             {
-                var token = Generate(user);
-                return Ok(token);
+                await Authenticate(user);
+                return RedirectToAction("MainPage");
             }
             return NotFound("User Not Found!");
 
         }
-        [AllowAnonymous]
 
-        [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Storages()
         {
             var storageViewModel = new StoragesViewModel();
@@ -111,32 +115,44 @@ namespace Diplom.Controllers
             storageViewModel.StorageWorkers = await _context.Set<StorageWorkers>().ToListAsync();
             return View(storageViewModel);
         }
+
         [AllowAnonymous]
-        public async Task<IActionResult> MainPaige()
+        public IActionResult MainPage()
         {
             return View();
         }
-        [Authorize("Admin")]
-        public async Task<IActionResult> AdministrationItems()
+
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AdministrationItemsCategory()
         {
             var itemsViewModel = new ItemsViewModel();
             itemsViewModel.Category = await _categoryService.GetAllCategorys();
-            return View();
+            itemsViewModel.Items = await _itemService.GetAllItems();
+            itemsViewModel.Respons = await _context.Set<ResponsForItem>().ToListAsync();
+            itemsViewModel.Storages = await _storageService.GetAllStorages();
+            return View(itemsViewModel);
         }
-        [Authorize("Manager")]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> ManagerItems()
         {
             return View();
         }
-        [Authorize("Worker")]
+        [Authorize(Roles ="Worker")]
         public async Task<IActionResult> WorkersItems()
         {
             return View();
         }
-        [Authorize("Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Users()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -145,9 +161,8 @@ namespace Diplom.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        static string CreateHashPassword(string password) 
+        static string CreateHashPassword(string password, byte[] salt) 
         {
-            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8); 
             string hashPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
             password: password!,
             salt: salt,
@@ -156,35 +171,19 @@ namespace Diplom.Controllers
             numBytesRequested: 256 / 8)); ;
             return hashPassword;
         }
-        private string Generate(User user)
-        {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha256);
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Login),
-                new Claim(ClaimTypes.Role, user.Role.RoleName),
-                new Claim(ClaimTypes.GivenName, user.FirstName),
-                new Claim(ClaimTypes.Surname, user.SecondName)
-            };
 
-            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-                _config["Jwt;Audience"],
-                claims,
-                expires:DateTime.Now.AddMinutes(15),
-                signingCredentials:credentials);
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-        private async Task<User> GetCurrentUser()
+        private async Task Authenticate(User user)
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity != null)
+            user.Role = await _context.Set<Role>().FirstOrDefaultAsync(o => o.Id.Equals(user.RoleId));
+            var claims = new List<Claim>
             {
-                var userClaims = identity.Claims;
-                var user = await _userService.GetUser(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value);
-                return user;
-            }
-            return null;
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name )
+            };
+            // создаем объект ClaimsIdentity
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            // установка аутентификационных куки
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
     }
 }

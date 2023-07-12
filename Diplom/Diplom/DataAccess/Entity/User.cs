@@ -2,7 +2,7 @@
 
 namespace Diplom.DataAccess.Entity
 {
-    public class User
+    public class User 
     {
         [Required]
         public int UserId { get; set; }
@@ -10,6 +10,8 @@ namespace Diplom.DataAccess.Entity
         public string FirstName { get; set; }
         [Required]
         public string SecondName { get; set; }
+        [Required]
+        public byte[] Salt { get; set; }
         [Required]
         [MaxLength(85)]
         public string HashPassword { get; set; }

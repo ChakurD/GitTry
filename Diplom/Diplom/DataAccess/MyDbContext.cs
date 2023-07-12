@@ -14,28 +14,34 @@ namespace Diplom.DataAccess
         public DbSet<User> Users { get; set; }
         public DbSet<ResponsForItem> ResponsForItems { get; set;}
         public DbSet<StorageWorkers> StorageWorkers { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) 
         {
         }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            byte[] salt1 = RandomNumberGenerator.GetBytes(128 / 8);
+            byte[] salt2 = RandomNumberGenerator.GetBytes(128 / 8);
+            byte[] salt3 = RandomNumberGenerator.GetBytes(128 / 8);
+            byte[] salt4 = RandomNumberGenerator.GetBytes(128 / 8);
             modelBuilder.Entity<Role>().HasData(
                 new Role 
                 {
-                    RoleId = 1,
-                    RoleName = "Admin"
+                    Id = 1,
+                    Name = "Admin"
                 });
             modelBuilder.Entity<Role>().HasData(
                new Role
                {
-                   RoleId = 2,
-                   RoleName = "Manager"
+                   Id = 2,
+                   Name = "Manager"
                });
             modelBuilder.Entity<Role>().HasData(
                new Role
                {
-                   RoleId = 3,
-                   RoleName = "Worker"
+                   Id = 3,
+                   Name = "Worker"
                });
             modelBuilder.Entity<Category>().HasData(
                new Category
@@ -111,7 +117,8 @@ namespace Diplom.DataAccess
                 UserId = 1,
                 FirstName = "Виталий",
                 SecondName = "Позднев",
-                HashPassword = CreateHashPassword("123jobpas"),
+                Salt = salt1,
+                HashPassword = CreateHashPassword("123jobpas", salt1),
                 Login = "VitJob123",
                 JobTittle = "Складовщик",
                 RoleId = 3,
@@ -124,7 +131,8 @@ namespace Diplom.DataAccess
                 UserId = 2,
                 FirstName = "Александр",
                 SecondName = "Довольный",
-                HashPassword = CreateHashPassword("jobAstat"),
+                Salt = salt2,
+                HashPassword = CreateHashPassword("jobAstat", salt2),
                 Login = "AleksJob",
                 JobTittle = "Заведующий складом",
                 RoleId = 2,
@@ -138,7 +146,8 @@ namespace Diplom.DataAccess
                 UserId = 3,
                 FirstName = "Федор",
                 SecondName = "Кручев",
-                HashPassword = CreateHashPassword("admin"),
+                Salt = salt3,
+                HashPassword = CreateHashPassword("admin", salt3),
                 Login = "admin",
                 JobTittle = "администратор",
                 RoleId = 1
@@ -150,7 +159,8 @@ namespace Diplom.DataAccess
                 UserId = 4,
                 FirstName = "Григорий",
                 SecondName = "Морозов",
-                HashPassword = CreateHashPassword("jobScan"),
+                Salt = salt4,
+                HashPassword = CreateHashPassword("jobScan", salt4),
                 Login = "ElectrickGrig",
                 JobTittle = "Электрик",
                 RoleId = 3,
@@ -241,9 +251,8 @@ namespace Diplom.DataAccess
           
 
         }
-        static string CreateHashPassword(string password)
+        static string CreateHashPassword(string password, byte[] salt)
         {
-            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
             string hashPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
             password: password!,
             salt: salt,

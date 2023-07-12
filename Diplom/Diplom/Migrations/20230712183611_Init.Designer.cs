@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Diplom.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20230628174102_Init")]
+    [Migration("20230712183611_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Diplom.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "7.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -213,6 +213,40 @@ namespace Diplom.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Diplom.DataAccess.Entity.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Manager"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Worker"
+                        });
+                });
+
             modelBuilder.Entity("Diplom.DataAccess.Entity.Storage", b =>
                 {
                     b.Property<int>("StorageId")
@@ -311,6 +345,13 @@ namespace Diplom.Migrations
                     b.Property<int?>("ResponsForItemId")
                         .HasColumnType("int");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("Salt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("SecondName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -324,6 +365,8 @@ namespace Diplom.Migrations
                         .IsUnique()
                         .HasFilter("[ResponsForItemId] IS NOT NULL");
 
+                    b.HasIndex("RoleId");
+
                     b.HasIndex("StorageWorkersId");
 
                     b.ToTable("Users");
@@ -333,9 +376,11 @@ namespace Diplom.Migrations
                         {
                             UserId = 1,
                             FirstName = "Виталий",
-                            HashPassword = "YMknM1lml1ruWxR8vyscklPHG6kXpxSWtnlFSWKTVZU=",
+                            HashPassword = "v0rp8ILZN1uaGv00H8CivzR1NX8cIn6kTDmFp1SBBjg=",
                             JobTittle = "Складовщик",
                             Login = "VitJob123",
+                            RoleId = 3,
+                            Salt = new byte[] { 165, 38, 42, 31, 166, 126, 188, 123, 8, 47, 188, 82, 51, 226, 115, 58 },
                             SecondName = "Позднев",
                             StorageWorkersId = 1
                         },
@@ -343,10 +388,12 @@ namespace Diplom.Migrations
                         {
                             UserId = 2,
                             FirstName = "Александр",
-                            HashPassword = "AzfdKe6u0W4aeK7Ep7xIq+2voUncyAqcKTkefRUkUUY=",
+                            HashPassword = "B8LjEDfxo0Y3tiHE27+28x2xr5TNvdMocSWTfKMwr2o=",
                             JobTittle = "Заведующий складом",
                             Login = "AleksJob",
                             ResponsForItemId = 1,
+                            RoleId = 2,
+                            Salt = new byte[] { 90, 20, 223, 38, 155, 195, 129, 249, 15, 35, 235, 220, 7, 29, 247, 164 },
                             SecondName = "Довольный",
                             StorageWorkersId = 2
                         },
@@ -354,19 +401,23 @@ namespace Diplom.Migrations
                         {
                             UserId = 3,
                             FirstName = "Федор",
-                            HashPassword = "Pw2OqKOe4YQO10ads8M37kLsMymze83yF4mQz/ieONs=",
+                            HashPassword = "gQxAsg3mhEPijpyJ7crT8uXS4AXxipFU9uLscJSfnhM=",
                             JobTittle = "администратор",
                             Login = "admin",
+                            RoleId = 1,
+                            Salt = new byte[] { 101, 70, 159, 33, 173, 208, 104, 70, 71, 176, 223, 137, 93, 2, 110, 27 },
                             SecondName = "Кручев"
                         },
                         new
                         {
                             UserId = 4,
                             FirstName = "Григорий",
-                            HashPassword = "37ZSgln3FFJVa6ixcCxC30hvjY4m99C9eYh5NbkbS4w=",
+                            HashPassword = "A99DkcdjwB1DifMzti3akGuHxzgl+sfXSBe+gskRA/8=",
                             JobTittle = "Электрик",
                             Login = "ElectrickGrig",
                             ResponsForItemId = 2,
+                            RoleId = 3,
+                            Salt = new byte[] { 51, 204, 106, 19, 253, 208, 217, 107, 156, 27, 107, 220, 222, 122, 85, 133 },
                             SecondName = "Морозов"
                         });
                 });
@@ -411,11 +462,19 @@ namespace Diplom.Migrations
                         .WithOne("User")
                         .HasForeignKey("Diplom.DataAccess.Entity.User", "ResponsForItemId");
 
+                    b.HasOne("Diplom.DataAccess.Entity.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Diplom.DataAccess.Entity.StorageWorkers", "StorageWorkers")
                         .WithMany("Users")
                         .HasForeignKey("StorageWorkersId");
 
                     b.Navigation("ResponsForItem");
+
+                    b.Navigation("Role");
 
                     b.Navigation("StorageWorkers");
                 });
@@ -431,6 +490,11 @@ namespace Diplom.Migrations
 
                     b.Navigation("User")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Diplom.DataAccess.Entity.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Diplom.DataAccess.Entity.Storage", b =>

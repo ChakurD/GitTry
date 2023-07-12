@@ -212,35 +212,35 @@ namespace Diplom.Migrations
 
             modelBuilder.Entity("Diplom.DataAccess.Entity.Role", b =>
                 {
-                    b.Property<int>("RoleId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("RoleName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RoleId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles");
 
                     b.HasData(
                         new
                         {
-                            RoleId = 1,
-                            RoleName = "Admin"
+                            Id = 1,
+                            Name = "Admin"
                         },
                         new
                         {
-                            RoleId = 2,
-                            RoleName = "Manager"
+                            Id = 2,
+                            Name = "Manager"
                         },
                         new
                         {
-                            RoleId = 3,
-                            RoleName = "Worker"
+                            Id = 3,
+                            Name = "Worker"
                         });
                 });
 
@@ -345,6 +345,10 @@ namespace Diplom.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
+                    b.Property<byte[]>("Salt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("SecondName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -369,10 +373,11 @@ namespace Diplom.Migrations
                         {
                             UserId = 1,
                             FirstName = "Виталий",
-                            HashPassword = "nbUlllLFhhl8PyyAYGDLSorO3/WycSbb7G73ArERw0M=",
+                            HashPassword = "v0rp8ILZN1uaGv00H8CivzR1NX8cIn6kTDmFp1SBBjg=",
                             JobTittle = "Складовщик",
                             Login = "VitJob123",
                             RoleId = 3,
+                            Salt = new byte[] { 165, 38, 42, 31, 166, 126, 188, 123, 8, 47, 188, 82, 51, 226, 115, 58 },
                             SecondName = "Позднев",
                             StorageWorkersId = 1
                         },
@@ -380,11 +385,12 @@ namespace Diplom.Migrations
                         {
                             UserId = 2,
                             FirstName = "Александр",
-                            HashPassword = "H78GWwgAup2M5NzshUBdIdo3r7+sjhq8xvjEX/kDQhc=",
+                            HashPassword = "B8LjEDfxo0Y3tiHE27+28x2xr5TNvdMocSWTfKMwr2o=",
                             JobTittle = "Заведующий складом",
                             Login = "AleksJob",
                             ResponsForItemId = 1,
                             RoleId = 2,
+                            Salt = new byte[] { 90, 20, 223, 38, 155, 195, 129, 249, 15, 35, 235, 220, 7, 29, 247, 164 },
                             SecondName = "Довольный",
                             StorageWorkersId = 2
                         },
@@ -392,21 +398,23 @@ namespace Diplom.Migrations
                         {
                             UserId = 3,
                             FirstName = "Федор",
-                            HashPassword = "ZlkEnAJEaP6AdHPqO0KwI4g1es85+SIpN3ZmVRULl+4=",
+                            HashPassword = "gQxAsg3mhEPijpyJ7crT8uXS4AXxipFU9uLscJSfnhM=",
                             JobTittle = "администратор",
                             Login = "admin",
                             RoleId = 1,
+                            Salt = new byte[] { 101, 70, 159, 33, 173, 208, 104, 70, 71, 176, 223, 137, 93, 2, 110, 27 },
                             SecondName = "Кручев"
                         },
                         new
                         {
                             UserId = 4,
                             FirstName = "Григорий",
-                            HashPassword = "7imSCJVHqr0h0G3uDSKRfis8cLdW16ehJ8NU2sXrgvw=",
+                            HashPassword = "A99DkcdjwB1DifMzti3akGuHxzgl+sfXSBe+gskRA/8=",
                             JobTittle = "Электрик",
                             Login = "ElectrickGrig",
                             ResponsForItemId = 2,
                             RoleId = 3,
+                            Salt = new byte[] { 51, 204, 106, 19, 253, 208, 217, 107, 156, 27, 107, 220, 222, 122, 85, 133 },
                             SecondName = "Морозов"
                         });
                 });

@@ -39,6 +39,19 @@ namespace Diplom.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StorageWorkers",
                 columns: table => new
                 {
@@ -79,8 +92,10 @@ namespace Diplom.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SecondName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Salt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     HashPassword = table.Column<string>(type: "nvarchar(85)", maxLength: 85, nullable: false),
                     Login = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
                     JobTittle = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
                     StorageWorkersId = table.Column<int>(type: "int", nullable: true),
                     ResponsForItemId = table.Column<int>(type: "int", nullable: true)
@@ -93,6 +108,12 @@ namespace Diplom.Migrations
                         column: x => x.ResponsForItemId,
                         principalTable: "ResponsForItems",
                         principalColumn: "ResponsForItemId");
+                    table.ForeignKey(
+                        name: "FK_Users_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Users_StorageWorkers_StorageWorkersId",
                         column: x => x.StorageWorkersId,
@@ -158,6 +179,16 @@ namespace Diplom.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Admin" },
+                    { 2, "Manager" },
+                    { 3, "Worker" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "StorageWorkers",
                 column: "StorageWorkersId",
                 values: new object[]
@@ -165,11 +196,6 @@ namespace Diplom.Migrations
                     1,
                     2
                 });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "UserId", "FirstName", "HashPassword", "JobTittle", "Login", "ResponsForItemId", "SecondName", "StorageWorkersId" },
-                values: new object[] { 3, "Федор", "Pw2OqKOe4YQO10ads8M37kLsMymze83yF4mQz/ieONs=", "администратор", "admin", null, "Кручев", null });
 
             migrationBuilder.InsertData(
                 table: "Items",
@@ -187,12 +213,13 @@ namespace Diplom.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "FirstName", "HashPassword", "JobTittle", "Login", "ResponsForItemId", "SecondName", "StorageWorkersId" },
+                columns: new[] { "UserId", "FirstName", "HashPassword", "JobTittle", "Login", "ResponsForItemId", "RoleId", "Salt", "SecondName", "StorageWorkersId" },
                 values: new object[,]
                 {
-                    { 1, "Виталий", "YMknM1lml1ruWxR8vyscklPHG6kXpxSWtnlFSWKTVZU=", "Складовщик", "VitJob123", null, "Позднев", 1 },
-                    { 2, "Александр", "AzfdKe6u0W4aeK7Ep7xIq+2voUncyAqcKTkefRUkUUY=", "Заведующий складом", "AleksJob", 1, "Довольный", 2 },
-                    { 4, "Григорий", "37ZSgln3FFJVa6ixcCxC30hvjY4m99C9eYh5NbkbS4w=", "Электрик", "ElectrickGrig", 2, "Морозов", null }
+                    { 1, "Виталий", "v0rp8ILZN1uaGv00H8CivzR1NX8cIn6kTDmFp1SBBjg=", "Складовщик", "VitJob123", null, 3, new byte[] { 165, 38, 42, 31, 166, 126, 188, 123, 8, 47, 188, 82, 51, 226, 115, 58 }, "Позднев", 1 },
+                    { 2, "Александр", "B8LjEDfxo0Y3tiHE27+28x2xr5TNvdMocSWTfKMwr2o=", "Заведующий складом", "AleksJob", 1, 2, new byte[] { 90, 20, 223, 38, 155, 195, 129, 249, 15, 35, 235, 220, 7, 29, 247, 164 }, "Довольный", 2 },
+                    { 3, "Федор", "gQxAsg3mhEPijpyJ7crT8uXS4AXxipFU9uLscJSfnhM=", "администратор", "admin", null, 1, new byte[] { 101, 70, 159, 33, 173, 208, 104, 70, 71, 176, 223, 137, 93, 2, 110, 27 }, "Кручев", null },
+                    { 4, "Григорий", "A99DkcdjwB1DifMzti3akGuHxzgl+sfXSBe+gskRA/8=", "Электрик", "ElectrickGrig", 2, 3, new byte[] { 51, 204, 106, 19, 253, 208, 217, 107, 156, 27, 107, 220, 222, 122, 85, 133 }, "Морозов", null }
                 });
 
             migrationBuilder.InsertData(
@@ -235,6 +262,11 @@ namespace Diplom.Migrations
                 filter: "[ResponsForItemId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_RoleId",
+                table: "Users",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_StorageWorkersId",
                 table: "Users",
                 column: "StorageWorkersId");
@@ -257,6 +289,9 @@ namespace Diplom.Migrations
 
             migrationBuilder.DropTable(
                 name: "ResponsForItems");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "StorageWorkers");

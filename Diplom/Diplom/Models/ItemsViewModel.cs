@@ -8,5 +8,6 @@ namespace Diplom.Models
         public IEnumerable<ResponsForItem> Respons { get; set; }
         public IEnumerable<Category> Category { get; set; }
         public IEnumerable<Storage> Storages { get; set; }
+        public User User { get; set; }
     }
 }

@@ -5,11 +5,8 @@ namespace Diplom.DataAccess.Entity
 {
     public class Role
     {
-        [Required]
-        [Key]
-        public int RoleId { get; set; }
-        [Required]
-        public string RoleName { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public List<User> Users { get; set; }
     }
 }
