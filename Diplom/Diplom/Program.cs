@@ -1,6 +1,7 @@
 using Diplom.DataAccess;
 using Diplom.DataAccess.DbPatterns;
 using Diplom.DataAccess.DbPatterns.Interfaces;
+using Diplom.DataAccess.Entity;
 using Diplom.Services.Interfaces;
 using Diplom.Services.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -26,6 +27,11 @@ namespace Diplom
             string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
             builder.Services.AddDbContext<MyDbContext>(options => options.UseSqlServer(connection));
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => //CookieAuthenticationOptions
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Home/Login");
+                });
 
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
             builder.Services.AddTransient<IUserServices, UserService>();
@@ -34,12 +40,6 @@ namespace Diplom
             builder.Services.AddTransient<IStorageServices, StorageService>();
             builder.Services.AddCors();
 
-            builder.Services.AddAuthorization();
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => //CookieAuthenticationOptions
-                {
-                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
-                });
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

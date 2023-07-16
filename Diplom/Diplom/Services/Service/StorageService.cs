@@ -17,10 +17,10 @@ namespace Diplom.Services.Service
             return await UnitOfWork.Storages.Create(storage);
         }
 
-        public async Task<Storage> GetStorage(string storageName)
+        public async Task<Storage> GetStorage(int? storageId)
         {
             IList<Storage> storages = await UnitOfWork.Storages.GetAll();
-            return storages.FirstOrDefault(x => x.Name == storageName);
+            return storages.FirstOrDefault(x => x.StorageId == storageId);
         }
 
         public async Task UpdateStorage(Storage storage)

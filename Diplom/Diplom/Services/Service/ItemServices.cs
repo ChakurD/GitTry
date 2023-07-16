@@ -15,10 +15,10 @@ namespace Diplom.Services.Service
             return await UnitOfWork.Items.Create(item);
         }
 
-        public async Task<Item> GetItem(string name)
+        public async Task<Item> GetItem(int? itemId)
         {
             IList<Item> items = await UnitOfWork.Items.GetAll();
-            return items.FirstOrDefault(x => x.Name == name);
+            return items.FirstOrDefault(x => x.ItemId == itemId);
         }
 
         public async Task UpdateItem(Item item)

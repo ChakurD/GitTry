@@ -2,9 +2,9 @@
 
 namespace Diplom.Models
 {
-    public class ItemsViewModel
+    public class CategoryViewModel
     {
         public IEnumerable<Item> Items { get; set; }
-        public Category Category { get; set; }
+        public IEnumerable<Category> Categorys { get; set;}
     }
 }

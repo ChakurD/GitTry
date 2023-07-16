@@ -15,10 +15,10 @@ namespace Diplom.Services.Service
             return await UnitOfWork.Categorys.Create(category);
         }
 
-        public async Task<Category> GetCategory(string categoryName)
+        public async Task<Category> GetCategory(int? categoryId)
         {
             IList<Category> items = await UnitOfWork.Categorys.GetAll();
-            return items.FirstOrDefault(x => x.Name == categoryName);
+            return items.FirstOrDefault(x => x.CategoryId == categoryId);
         }
 
         public async Task UpdateCategory(Category category)

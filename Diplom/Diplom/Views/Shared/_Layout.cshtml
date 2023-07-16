@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+@{
+    var role = ClaimsIdentity.DefaultRoleClaimType;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,13 +29,20 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Storages">Склады</a>
                         </li>
+                        <system.WebServer></system.WebServer>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AdministrationItemsCategory">Предметы</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Categorys">Предметы</a>
                         </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Users">Пользователи</a>
+                            </li>
                     </ul>
                     <ul class="nav nav-pills justify-content-end">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Login">Вход</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Logout">Выход</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Registration">Регистрация</a>
