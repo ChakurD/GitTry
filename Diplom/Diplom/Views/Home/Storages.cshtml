@@ -59,12 +59,16 @@
                         <a asp-action="EditStorage" asp-controller="EditMainEntity" asp-route-id="@storage.StorageId">Изменить</a>
                 </td>
                 <td>
-                        <form asp-controller="EditMainEntity" asp-action="DeleteStorage" method="post"  asp-route-id="@storage.StorageId">
+                    <form asp-controller="EditMainEntity" asp-action="DeleteStorage" method="post"  asp-route-storageId="@storage.StorageId">
                         <input type="submit" value="Удалить" />
                     </form>
                 </td>
+                    <td>
+                                <a asp-controller="InventoryController" asp-action="StorageInventory" method="post"  asp-route-storageId="@storage.StorageId">Инвентаризация</a>
+                    </td>
     </tr>
   }
+  </tbody>
 </table>
   
 

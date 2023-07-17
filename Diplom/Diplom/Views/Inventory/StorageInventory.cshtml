@@ -1,0 +1,50 @@
+﻿@model StorageInventoryViewModel
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  </head>
+ <body>
+ </body>
+ <h2>@Model.Storage.Name</h2>
+ <table class="table table-dark table-striped-columns">
+     <thead>
+         <tr>
+             <th scope="col">Название предмета</th>
+             <th scope="col">Бренд</th>
+             <th scope="col">Модель</th>
+             <th scope="col">Количество</th>
+             <th scope="col">Количество после инвентаризации</th>
+             <th scope="col">Цена за ед.</th>
+         </tr>
+     </thead>
+     <tbody>
+         @foreach(var item in Model.StorageItems)
+         {
+             <tr>
+                 <th scope="col">@item.Name</th>
+                 <th scope="col">@item.Brand</th>
+                 <th scope="col">@item.Model</th>
+                 <th scope="col">@item.Count</th>
+                 @foreach(var inventory in Model.ItemInventoryResults)
+                {
+                    if(inventory.ItemId.Equals(item.ItemId))
+                    {
+                        <th scope="col"><div class="col-12">
+                            <input type="text" class="form-control" id="CurrentAmount" placeholder="@item.Count">
+                        </div></th>
+                    }
+                }
+                <th scope="col">@item.Price</th>
+             </tr>
+         }
+
+     </tbody>
+ </table>
+ <div class="col-12">
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+  </div>
+</html>
