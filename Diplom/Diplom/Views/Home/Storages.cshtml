@@ -1,0 +1,77 @@
+﻿@model StoragesViewModel
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Склады</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  </head>
+  <body>
+      <p><a asp-action="CreateStorage">Добавить склад</a></p>
+   <table class="table table-success table-striped">
+   <thead>
+    <tr>
+      <th scope="col">№</th>
+      <th scope="col">Имя склада</th>
+      <th scope="col">Адрес</th>
+      <th scope="col">Список предметов на складе</th>
+      <th scope="col">Работники склада</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  @foreach(var storage in Model.Storages)
+  {
+    <tr>
+      <th scope="row">@storage.StorageId</th>
+      <td>@storage.Name</td>
+      <td>@storage.Addres</td>
+      <td>@foreach(var item in Model.Items)
+        {
+            @if (item.StorageId.Equals(storage.StorageId))
+            {
+                <div class="container">
+                    <div class="row">
+                        <div class="col-9">@item.Name</div>
+                    </div>
+                </div>
+            }
+         }
+
+      </td>
+      <td>
+          
+          @foreach(var user in Model.Users)
+          {
+                if (user.StorageWorkersId.Equals(storage.StorageWorkersId))
+                {
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-9">@user.FirstName @user.SecondName @user.JobTittle</div>
+                        </div>
+                    </div>   
+                }
+          }
+      </td>
+          <td>
+                        <a asp-action="EditStorage" asp-controller="EditMainEntity" asp-route-id="@storage.StorageId">Изменить</a>
+                </td>
+                <td>
+                    <form asp-controller="EditMainEntity" asp-action="DeleteStorage" method="post"  asp-route-storageId="@storage.StorageId">
+                        <input type="submit" value="Удалить" />
+                    </form>
+                </td>
+                    <td>
+                                <a asp-controller="InventoryController" asp-action="StorageInventory" method="post"  asp-route-storageId="@storage.StorageId">Инвентаризация</a>
+                    </td>
+    </tr>
+  }
+  </tbody>
+</table>
+  
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>
